@@ -3,7 +3,53 @@ package RT::Extension::RestrictEmailDomain;
 use strict;
 use warnings;
 
+=head1 NAME
+
+RT::Extension::RestrictEmailDomain - Enforce allowed email domains for Requestor/Cc/AdminCc via callbacks
+
+=head1 DESCRIPTION
+
+Web UI callbacks call C<ValidateEmailAddresses> to block saves when
+disallowed emails are present. The Email gateway callback scrubs TicketArgs.
+
+=head1 CONFIGURATION
+C<<
+Set(@Plugins, qw(
+    RT::Extension::RestrictEmailDomain
+));
+
+Set(%RestrictEmailDomain,
+    AllowedDomains  => ['example.com'], # REQUIRED to activate
+    AllowSubdomains => 0,               # 1 to accept foo.bar.example.com
+);
+>>
+
+=head1 METHODS
+
+=head2 ValidateEmailAddresses($ARGSRef)
+
+Validate (and normalize) Requestor/Cc/AdminCc-related fields in a web request.
+Returns a list of error strings; also rewrites disallowed entries out of C<$ARGSRef>.
+
+=cut
+
+=head1 AUTHOR
+
+Grant Emsley, C<< <grant@emsley.ca> >>
+
+=head1 LICENSE AND COPYRIGHT
+
+GNU General Public License, Version 2
+
+=head1 VERSION
+
+Version 1.2.0
+
+=cut
+
 our $VERSION = '1.2.0';
+
+
 
 # -----------------------------
 # Configuration helpers
@@ -131,14 +177,6 @@ sub ValidateEmailAddresses {
     return @errors;
 }
 
-# -------- Back-compat (deprecated) --------
-# Provide deprecated alias for old plugin name if admins referenced it.
-sub ValidateAndCleanUIArgs {
-    my ($class, @rest) = @_;
-    RT->Logger->warning('RestrictEmailDomain: ValidateAndCleanUIArgs is deprecated; use ValidateEmailAddresses');
-    return $class->ValidateEmailAddresses(@rest);
-}
-
 # -----------------------------
 # Email (mailgate) scrubber (used by Email BeforeCreate callback)
 # -----------------------------
@@ -162,24 +200,3 @@ sub FilterTicketArgs {
 
 1;
 
-__END__
-
-=head1 NAME
-
-RT::Extension::RestrictEmailDomain - Enforce allowed email domains for Requestor/Cc/AdminCc via callbacks
-
-=head1 DESCRIPTION
-
-Web UI callbacks call C<ValidateEmailAddresses> to block saves when
-disallowed emails are present. The Email gateway callback scrubs TicketArgs.
-
-=head1 METHODS
-
-=head2 ValidateEmailAddresses($ARGSRef)
-
-Validate (and normalize) Requestor/Cc/AdminCc-related fields in a web request.
-Returns a list of error strings; also rewrites disallowed entries out of C<$ARGSRef>.
-
-=head2 ValidateAndCleanUIArgs (deprecated)
-
-Backward-compatible alias for C<ValidateEmailAddresses>.
