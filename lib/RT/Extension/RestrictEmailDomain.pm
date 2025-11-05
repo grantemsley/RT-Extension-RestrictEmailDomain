@@ -143,7 +143,6 @@ sub _error_for {
 # -----------------------------
 # UI validator (used by Mason callbacks)
 # -----------------------------
-# Modifies $args in place: removes disallowed emails so the save won't include them.
 # Returns array of error strings; caller should push into $results and set a skip flag.
 sub ValidateEmailAddresses {
     my ($class, $args) = @_;
@@ -168,9 +167,6 @@ sub ValidateEmailAddresses {
         my ($ok, $bad) = $class->filter_list(@list);
         if (@$bad) {
             push @errors, $class->_error_for($label, $bad);
-            # Overwrite with allowed only (preserve original form)
-            $args->{$arg_key} = (ref($args->{$arg_key}) eq 'ARRAY')
-                ? $ok : join(', ', @$ok);
         }
     }
 

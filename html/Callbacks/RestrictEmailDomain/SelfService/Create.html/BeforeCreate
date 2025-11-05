@@ -1,4 +1,3 @@
-
 <%init>
 return unless RT::Extension::RestrictEmailDomain->enabled;
 
@@ -10,3 +9,9 @@ if (@errors) {
     $$skip_create = 1 if defined $skip_create;   # block save so user can fix
 }
 </%init>
+<%args>
+$ARGSRef => undef
+$results => undef
+$skip_create => undef
+</%args>
+
