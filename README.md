@@ -39,7 +39,7 @@ Set(%RestrictEmailDomain,
 
 - UI callbacks on `Ticket/Create.html` (BeforeCreate), `SelfService/Create.html` (BeforeCreate) call `ValidateEmailAddresses($ARGSRef)`. They push errors and set skip flags to block save if any disallowed address is present.
 - Mailgate callback `RT::Interface::Email` (BeforeCreate) calls `FilterTicketArgs($TicketArgs)` to remove disallowed Requestor/Cc/AdminCc.
-- Additional overlay for RT::User ValidateEmailAddress prevents creating users with email addresses that aren't in the allowed domains. This blocks them from being added via the ModifyPeople, ModifyAll or quick edit methods where there are no callbacks available to stop it.
+- Additional overlay for RT::User ValidateEmailAddress prevents creating users with email addresses that aren't in the allowed domains. This blocks them from being added via the ModifyPeople, ModifyAll or quick edit methods where there are no callbacks available to stop it. Unfortunately the error isn't as clear as I would like about why.
 
 ## Configuration
 
