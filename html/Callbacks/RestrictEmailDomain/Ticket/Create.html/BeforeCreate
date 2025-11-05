@@ -1,0 +1,12 @@
+
+<%init>
+return unless RT::Extension::RestrictEmailDomain->enabled;
+
+my $args    = $ARGSRef;
+my @errors  = RT::Extension::RestrictEmailDomain->ValidateEmailAddresses($args);
+
+if (@errors) {
+    push @$results, @errors;
+    $$skip_create = 1 if defined $skip_create;   # block save so user can fix
+}
+</%init>

@@ -1,0 +1,7 @@
+
+{
+    no warnings 'once';
+    if ( RT::Extension::RestrictEmailDomain->enabled ) {
+        RT::Extension::RestrictEmailDomain->FilterTicketArgs($TicketArgs);
+    }
+}
