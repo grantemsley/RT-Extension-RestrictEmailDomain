@@ -50,3 +50,9 @@ Set(%RestrictEmailDomain,
 
 - If the email From/Requestor is disallowed, the ticket will be created without a Requestor (valid in RT but may affect notifications).
 - The plugin logs removals during the email path at INFO level.
+
+## Changelog
+
+### Version 1.2.1
+
+Added support for forms created by FormTools. At the moment this requires a callback that hasn't been added yet - see [this pull request](https://github.com/bestpractical/rt-extension-formtools/pull/11).
