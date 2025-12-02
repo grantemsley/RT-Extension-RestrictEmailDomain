@@ -13,16 +13,15 @@ Web UI callbacks call C<ValidateEmailAddresses> to block saves when
 disallowed emails are present. The Email gateway callback scrubs TicketArgs.
 
 =head1 CONFIGURATION
-C<<
-Set(@Plugins, qw(
-    RT::Extension::RestrictEmailDomain
-));
 
-Set(%RestrictEmailDomain,
-    AllowedDomains  => ['example.com'], # REQUIRED to activate
-    AllowSubdomains => 0,               # 1 to accept foo.bar.example.com
-);
->>
+    Set(@Plugins, qw(
+        RT::Extension::RestrictEmailDomain
+    ));
+
+    Set(%RestrictEmailDomain,
+        AllowedDomains  => ['example.com'], # REQUIRED to activate
+        AllowSubdomains => 0,               # 1 to accept foo.bar.example.com
+    );
 
 =head1 METHODS
 
@@ -35,7 +34,7 @@ Returns a list of error strings; also rewrites disallowed entries out of C<$ARGS
 
 =head1 AUTHOR
 
-Grant Emsley, C<< <grant@emsley.ca> >>
+Grant Emsley E<lt>grant@emsley.caE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
@@ -43,11 +42,11 @@ GNU General Public License, Version 2
 
 =head1 VERSION
 
-Version 1.2.1
+Version 1.2.2
 
 =cut
 
-our $VERSION = '1.2.1';
+our $VERSION = '1.2.2';
 
 
 
